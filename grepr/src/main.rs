@@ -8,9 +8,8 @@ use grepr::Config;
 
 fn main() {
     let mut stderr = std::io::stderr();
-    let args: Vec<String> = env::args().collect();
 
-    let config  = Config::new(&args)
+    let config  = Config::new(env::args())
                          .unwrap_or_else(|err| {
                                 writeln!(&mut stderr, "Problem parsing arguments: {}", err)
                                         .expect("Could not write to stderr");
