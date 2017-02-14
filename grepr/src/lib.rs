@@ -3,6 +3,16 @@ use std::fs::File;
 use std::io::prelude::*;
 
 
+pub fn grep<'a>(search: &str, contents: &'a str) -> Vec<&'a str> {
+    let mut results = Vec::new();
+    for line in contents.lines() {
+        if line.contains(search) {
+            results.push(line);
+        }
+    }
+    results
+}
+
 pub struct Config {
     pub search: String,
     pub filename: String,
@@ -31,7 +41,23 @@ pub fn run(config: Config) -> Result<(), Box<Error>> {
     let mut contents = String::new();
     file.read_to_string(&mut contents).expect("Something went wrong reading the file");
 
-    println!("With text: \n{}", contents);
+    for line in grep(&config.search, &contents){
+        println!("{}", line);
+    }
 
     Ok(())
+}
+
+#[cfg(test)]
+mod test {
+    use grep;
+
+    #[test]
+    fn one_result() {
+        let search = "duct";
+        let contents = "Rust:\nsafe, fast, productive.\nPick three.";
+    
+        assert_eq!(vec!["safe, fast, productive."], grep(search, contents));
+    }
+
 }
