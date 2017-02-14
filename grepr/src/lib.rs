@@ -31,7 +31,7 @@ pub fn run(config: Config) -> Result<(), Box<Error>> {
     let mut contents = String::new();
     file.read_to_string(&mut contents).expect("Something went wrong reading the file");
 
-    println!("With text \n{}", contents);
+    println!("With text: \n{}", contents);
 
     Ok(())
 }
