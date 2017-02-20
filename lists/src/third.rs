@@ -37,25 +37,6 @@ impl<T> List<T> {
 }
 
 
-/*
-Crappy version of drop that only runs in O(n) time.
-impl Drop<T> for List<T> {
-    fn drop(&mut self) {
-        //steal list's head
-        let mut cur_list = self.head.take();
-
-        while let Some(node) = cur_list {
-            // clone's the current node's next node
-            cur_list = node.next.clone();
-            // drops the node here if it had refcount 1
-            // since we have a reference to it's next node it won't 
-            // recurse and drop its child
-        }
-    }
-}
-*/
-
-
 // amortized O(1) solution for drop but only works on nightly build
 impl<T> Drop for List<T> {
     fn drop(&mut self) {
